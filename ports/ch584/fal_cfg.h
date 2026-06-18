@@ -7,7 +7,8 @@
 #ifndef _FAL_CFG_H_
 #define _FAL_CFG_H_
 
-#define FAL_DEBUG 1
+// #define FAL_PRINTF   // 定义 FAL_PRINTF 为空，禁用 FAL 内部日志输出 
+#define FAL_DEBUG 0     // 1: 打印调试信息，0: 不打印
 #define FAL_PART_HAS_TABLE_CFG
 
 /* ===================== Flash device Configuration ========================= */
