@@ -12,6 +12,8 @@
 #ifndef _FDB_CFG_H_
 #define _FDB_CFG_H_
 
+#include "fal_cfg.h"
+
 /* using KVDB feature */
 #define FDB_USING_KVDB
 
@@ -28,7 +30,11 @@
 
 /* the flash write granularity, unit: bit
  * only support 1(nor flash)/ 8(stm32f2/f4)/ 32(stm32f1) */
-#define FDB_WRITE_GRAN 1 /* @note you must define it for a value */
+#if FLASHDB_FDB_ONCHIP
+#define FDB_WRITE_GRAN 32 /* internal Flash-ROM writes by 4-byte word */
+#else
+#define FDB_WRITE_GRAN 1  /* external W25Q32 NOR flash */
+#endif
 
 /* MCU Endian Configuration, default is Little Endian Order. */
 /* #define FDB_BIG_ENDIAN  */
