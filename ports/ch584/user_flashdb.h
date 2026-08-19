@@ -14,8 +14,8 @@ extern "C" {
 int flashdb_init(void);
 
 void fdb_tsdb_erase_all(void);
-void tsdb_printf(const char *fmt, ...);
-void tsdb_write(uint8_t *data, size_t len);
+bool tsdb_printf(const char *fmt, ...);
+bool tsdb_write(uint8_t *data, size_t len);
 size_t tsdb_read_count(void);
 
 bool tsdb_read_latest(uint8_t *buff, size_t *len);

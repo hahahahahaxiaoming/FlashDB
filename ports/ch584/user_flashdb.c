@@ -126,7 +126,7 @@ void fdb_tsdb_erase_all(void)
 
 #define TSDB_PRINTF_BUFF_SIZE 128  // 每条日志最大长度，与初始化 TSDB 时保持一致
 
-void tsdb_printf(const char *fmt, ...)
+bool tsdb_printf(const char *fmt, ...)
 {
     char buf[TSDB_PRINTF_BUFF_SIZE];
     va_list args;
@@ -147,10 +147,12 @@ void tsdb_printf(const char *fmt, ...)
     fdb_err_t err = fdb_tsl_append(&tsdb, fdb_blob_make(&blob, (uint8_t*)buf, len));
     if (err != FDB_NO_ERR) {
         FLASHDB_DBG("Failed to append log to TSDB error: %d", err);
+        return false;
     }
+    return true;
 }
 
-void tsdb_write(uint8_t *data, size_t len)
+bool tsdb_write(uint8_t *data, size_t len)
 {
     struct fdb_blob blob = {0};
 
@@ -161,7 +163,9 @@ void tsdb_write(uint8_t *data, size_t len)
     fdb_err_t err = fdb_tsl_append(&tsdb, fdb_blob_make(&blob, data, len));
     if (err != FDB_NO_ERR) {
         FLASHDB_DBG("Failed to append log to TSDB error: %d", err);
+        return false;
     }
+    return true;
 }
 
 // =================== flash kv ======================
