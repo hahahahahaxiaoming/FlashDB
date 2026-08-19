@@ -153,7 +153,7 @@ void tsdb_write(uint8_t *data, size_t len)
 
     if (len > TSDB_PRINTF_BUFF_SIZE) len = TSDB_PRINTF_BUFF_SIZE;
 
-    FLASHDB_DBG_HEX(data, len);
+    // FLASHDB_DBG_HEX(data, len);
 
     fdb_tsl_append(&tsdb, fdb_blob_make(&blob, data, len));
 }
