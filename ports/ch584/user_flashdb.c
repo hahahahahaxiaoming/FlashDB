@@ -140,11 +140,14 @@ void tsdb_printf(const char *fmt, ...)
     if (len > TSDB_PRINTF_BUFF_SIZE) len = TSDB_PRINTF_BUFF_SIZE;
 
     // 打印到串口（可选）
-    FLASHDB_DBG("%.*s\n", len, buf);
+    // FLASHDB_DBG("%.*s\n", len, buf);
 
     // 封装成 fdb_blob 并写入 TSDB
     struct fdb_blob blob = {0};
-    fdb_tsl_append(&tsdb, fdb_blob_make(&blob, (uint8_t*)buf, len));
+    fdb_err_t err = fdb_tsl_append(&tsdb, fdb_blob_make(&blob, (uint8_t*)buf, len));
+    if (err != FDB_NO_ERR) {
+        FLASHDB_DBG("Failed to append log to TSDB error: %d", err);
+    }
 }
 
 void tsdb_write(uint8_t *data, size_t len)
@@ -155,7 +158,10 @@ void tsdb_write(uint8_t *data, size_t len)
 
     // FLASHDB_DBG_HEX(data, len);
 
-    fdb_tsl_append(&tsdb, fdb_blob_make(&blob, data, len));
+    fdb_err_t err = fdb_tsl_append(&tsdb, fdb_blob_make(&blob, data, len));
+    if (err != FDB_NO_ERR) {
+        FLASHDB_DBG("Failed to append log to TSDB error: %d", err);
+    }
 }
 
 // =================== flash kv ======================
