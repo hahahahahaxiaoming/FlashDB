@@ -136,7 +136,7 @@ bool tsdb_printf(const char *fmt, ...)
     int len = vsnprintf(buf, sizeof(buf), fmt, args);
     va_end(args);
 
-    if (len < 0) return; // 格式化出错
+    if (len < 0) return false; // 格式化出错
     if (len > TSDB_PRINTF_BUFF_SIZE) len = TSDB_PRINTF_BUFF_SIZE;
 
     // 打印到串口（可选）
